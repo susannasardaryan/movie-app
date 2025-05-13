@@ -1,0 +1,48 @@
+import {NavLink} from "react-router";
+import {HOME_PATH, MOVIES_HOME_PATH} from "../routes/paths.ts";
+import type {ReactNode} from "react";
+import {Button, Flex} from "antd";
+import {useNavigate} from "react-router-dom";
+import logoImg from "../assets/Mask group.png";
+import logoText from "../assets/Movies.png";
+import {StorageService} from "../services/apiService.ts";
+
+const Layout = ({children}: { children: ReactNode }) => {
+    const navigate = useNavigate();
+    const isLoggedIn = StorageService.getItem('isLoggedIn');
+
+    const handleLogOut = () => {
+        localStorage.setItem("isLoggedIn", JSON.stringify(false));
+        navigate('/');
+    }
+
+    const handleLogIn = () => {
+        navigate('/login');
+    }
+
+    return (
+        <>
+            <Flex className={'layout'} justify={'space-between'} color={'white'} align={'center'}>
+                <div className={'logo'}>
+                    <img src={logoImg} alt="logoImg"/>
+                    <img src={logoText} alt="logoText"/>
+                </div>
+                <nav className={'nav'}>
+                    <NavLink to={HOME_PATH} end>
+                        Home&nbsp;
+                    </NavLink>
+                    <NavLink to={MOVIES_HOME_PATH} end>
+                        Movies&nbsp;
+                    </NavLink>
+                </nav>
+
+                {isLoggedIn && <Button onClick={handleLogOut}>Log out</Button>}
+                {!isLoggedIn && <Button onClick={handleLogIn}>Log In</Button>}
+
+            </Flex>
+            {children}
+        </>
+    )
+}
+
+export default Layout;
