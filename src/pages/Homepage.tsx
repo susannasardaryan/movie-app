@@ -7,11 +7,13 @@ import type {RootState} from "../app/store.ts";
 import {type UserInfo} from "../features/login/loginSlice.ts";
 import {fetchPopularMovies} from "../api/fetchData.ts";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Homepage = () => {
-    const favoriteMovies:Movie[] = useSelector((state:RootState) => state.login.favoriteMoviesList);
+    const favoriteMovies: Movie[] = useSelector((state: RootState) => state.login.favoriteMoviesList);
     const user: UserInfo = useSelector((state: RootState) => state.login.userInfo);
     let [trendingMovies, setRendingMovies] = useState<Movie[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchPopularMovies().then((movies) => {
@@ -31,10 +33,10 @@ const Homepage = () => {
 
                 <div className="hero-right">
                     <div className="main-image-container">
-                        <img src={'./homepage1.png'} alt="Spiderverse" className="main-img"/>
-                        <PlayCircleFilled className="center-play-icon"/>
+                        <img src={'./homepage1.jpg'} alt="Spiderverse" className="main-img"/>
+                        <PlayCircleFilled className="center-play-icon" onClick={() => navigate('/movies/569094')}/>
                     </div>
-                    <img src={'./homepage2.png'} alt="Guardians" className="side-img"/>
+                    <img src={'./homepage2.jpg'} alt="Guardians" className="side-img"/>
                 </div>
             </div>
             {
@@ -51,7 +53,7 @@ const Homepage = () => {
             <h1>Trending Now</h1>
             <Flex gap="small" wrap="wrap">
                 {trendingMovies.map(movie => (
-                    <MovieCard movie={movie} key={movie.id} />
+                    <MovieCard movie={movie} key={movie.id}/>
                 ))}
             </Flex>
 

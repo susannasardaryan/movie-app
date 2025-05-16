@@ -21,7 +21,7 @@ const Login = () => {
             localStorage.setItem("userInfo", JSON.stringify(values));
         }
         delete values.remember;
-        console.log(values);
+
         dispatch(setInfo(values));
 
         const favorites: Movie[] = StorageService.getItem('favorites') ?? [];
@@ -39,7 +39,7 @@ const Login = () => {
                 name="basic"
                 labelCol={{span: 8}}
                 wrapperCol={{span: 16}}
-                style={{minWidth: 500}}
+                style={{maxWidth: 800, minWidth: 400}}
                 initialValues={{remember: true}}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}

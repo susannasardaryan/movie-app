@@ -1,23 +1,28 @@
-import {Navigate, useLocation} from "react-router-dom";
+import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import type {RootState} from "../app/store.ts";
 import type {Movie} from "../features/movies/moviesSlice.ts";
+import {RollbackOutlined} from "@ant-design/icons";
 
 const MoviePage = () => {
     const location = useLocation();
-    const movieId = location.pathname.split("/")[2];
-    const movies = useSelector((state:RootState) => state.movies);
+    const navigate = useNavigate();
 
-    const movie:Movie|undefined = movies.find((movie:Movie) => movie.id === +movieId);
-    if(!movie) {
+    const movieId = location.pathname.split("/")[2];
+    const movies = useSelector((state: RootState) => state.movies);
+
+    const movie: Movie | undefined = movies.find((movie: Movie) => movie.id === +movieId);
+    if (!movie) {
         return <Navigate to={`/movies`}></Navigate>
     }
     return (
-        <div  style={{ width: "50%" }}>
-            Movie Page
+        <div className={'movie-page-container'}>
+
+            <RollbackOutlined onClick={() => navigate('/movies')}/>
+            &nbsp; Movie Page
             <h2>{movie?.title}</h2>
             <img
-                src={`https://image.tmdb.org/t/p/w500${movie?.backdrop_path}`}
+                src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
                 alt={movie?.title}
                 style={{width: "100%", borderRadius: "8px"}}
             />

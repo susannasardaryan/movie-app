@@ -26,7 +26,7 @@ const MoviesPage = () => {
 
     return (
         <div className="movies">
-            <Search placeholder="input search text" allowClear onSearch={handleSearch} style={{ width: 500, margin: '1rem' }} />
+            <Search placeholder="input search text" allowClear onSearch={handleSearch} style={{ width:'50%', margin: '1rem 0' }} />
             {movies.length === 0 ? (
                 <p>No movies found.</p>
             ) : (
