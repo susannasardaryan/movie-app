@@ -11,12 +11,16 @@ body {
     transition: all 1s linear;
     color: white;
     height: 100%;
+    overflow-x: hidden;
 }
 
 .header {
     font-family: "Bebas Neue", sans-serif;
 }
 
+h1{
+    font-family: "Bebas Neue", sans-serif;
+}
 .nav {
     display: flex;
     gap: 1rem;
@@ -46,7 +50,12 @@ body {
 .movies {
     padding: 0.1rem 0.3rem;
 }
+.favorites {
+    overflow-x: auto;
+    white-space: nowrap;
 
+    margin: 1rem 0;
+}
 
 .movie-card {
     width: 180px;
@@ -173,4 +182,22 @@ body {
 
 .white-form .ant-checkbox-wrapper {
     color: white;
+}
+
+.favorites::-webkit-scrollbar {
+    height: 8px;
+}
+
+.favorites::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.favorites::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.favorites::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

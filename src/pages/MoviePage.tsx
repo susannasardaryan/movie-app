@@ -1,4 +1,4 @@
-import {useLocation} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 import type {RootState} from "../app/store.ts";
 import type {Movie} from "../features/movies/moviesSlice.ts";
@@ -9,7 +9,9 @@ const MoviePage = () => {
     const movies = useSelector((state:RootState) => state.movies);
 
     const movie:Movie|undefined = movies.find((movie:Movie) => movie.id === +movieId);
-
+    if(!movie) {
+        return <Navigate to={`/movies`}></Navigate>
+    }
     return (
         <div  style={{ width: "50%" }}>
             Movie Page

@@ -1,8 +1,10 @@
 import {Button, Checkbox, Form, type FormProps, Input} from 'antd';
 import {useNavigate} from "react-router-dom";
-import {setInfo} from "../features/login/loginSlice.ts";
+import {setFavoriteMovies, setInfo} from "../features/login/loginSlice.ts";
 import {useDispatch} from "react-redux";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
+import type {Movie} from "../features/movies/moviesSlice.ts";
+import {StorageService} from "../services/apiService.ts";
 
 type FieldType = {
     username: string;
@@ -15,12 +17,15 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const onFinish = (values: FieldType) => {
-        console.log("onFinish", values);
         if (values.remember) {
             localStorage.setItem("userInfo", JSON.stringify(values));
         }
         delete values.remember;
-        dispatch(setInfo(values))
+        console.log(values);
+        dispatch(setInfo(values));
+
+        const favorites: Movie[] = StorageService.getItem('favorites') ?? [];
+        dispatch(setFavoriteMovies(favorites));
         navigate("/");
     };
 

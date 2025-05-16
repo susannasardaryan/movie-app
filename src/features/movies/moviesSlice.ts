@@ -29,4 +29,4 @@ const moviesSlice = createSlice({
 
 export const {setMovies} = moviesSlice.actions;
 export const {selectMovies} = moviesSlice.selectors;
-export default moviesSlice;
+export default moviesSlice.reducer;

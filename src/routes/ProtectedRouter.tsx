@@ -1,15 +1,15 @@
 import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
-import {StorageService} from "../services/apiService.ts";
-import type {UserInfo} from "../features/login/loginSlice.ts";
+import {getUsername} from "../features/login/loginSlice.ts";
+import {useSelector} from "react-redux";
 
 type ProtectedRouteProps = {
     children: ReactNode;
 };
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-    const userInfo:UserInfo = StorageService.getItem('userInfo');
-    console.log(userInfo);
+    const userInfo:string = useSelector(getUsername);
+
     if (!userInfo) {
         return <Navigate to="/login" />;
     }

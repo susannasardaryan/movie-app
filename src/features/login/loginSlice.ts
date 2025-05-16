@@ -1,30 +1,55 @@
-import {createSlice} from "@reduxjs/toolkit";
 import type {PayloadAction} from "@reduxjs/toolkit";
-
-interface LoginState{
-   userInfo: UserInfo,
-}
+import {createSlice} from "@reduxjs/toolkit";
+import type {Movie} from "../movies/moviesSlice.ts";
+import {StorageService} from "../../services/apiService.ts";
 
 export type UserInfo = {
-    username: string,
-    password: string,
+    username: string;
+    password: string;
+};
+
+export interface LoginState {
+    userInfo: UserInfo;
+    favoriteMoviesList: Movie[];
 }
 
-const loginSlice = createSlice({
-    name: "user",
-    initialState: {
-        userInfo: {
-            username: "",
-            password: "",
-        }
-    },
-    reducers: {
-        setInfo: (state:LoginState,action: PayloadAction<UserInfo>)=> {
-            state.userInfo.username = action.payload?.username;
-            state.userInfo.password = action.payload?.password;
-        }
-    }
-})
+const initialFavorites: Movie[] = StorageService.getItem("favorites") ?? [];
+const initialUserInfo: UserInfo = StorageService.getItem("userInfo") ?? {
+    username: "",
+    password: "",
+};
 
-export const {setInfo} = loginSlice.actions;
-export default loginSlice;
+console.log(initialUserInfo, initialFavorites);
+
+const initialState: LoginState = {
+    userInfo: initialUserInfo,
+    favoriteMoviesList: initialFavorites,
+};
+
+const loginSlice = createSlice({
+    name: "login",
+    initialState,
+    reducers: {
+        setInfo: (state, action: PayloadAction<UserInfo>) => {
+            state.userInfo = action.payload;
+        },
+        setFavoriteMovies: (state, action: PayloadAction<Movie[]>) => {
+            state.favoriteMoviesList = action.payload;
+        },
+        addFavoriteMovie: (state, action: PayloadAction<Movie>) => {
+            state.favoriteMoviesList.push(action.payload);
+        },
+        removeFavoriteMovie: (state, action: PayloadAction<number>) => {
+            state.favoriteMoviesList = state.favoriteMoviesList.filter(
+                (el) => el.id !== action.payload
+            );
+        },
+    },
+    selectors: {
+        getUsername: state => state.userInfo.username,
+    }
+});
+
+export const { setInfo, setFavoriteMovies, addFavoriteMovie, removeFavoriteMovie } = loginSlice.actions;
+export const {getUsername} = loginSlice.selectors;
+export default loginSlice.reducer;

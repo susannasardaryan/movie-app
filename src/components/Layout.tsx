@@ -29,6 +29,7 @@ const Layout = ({children}: { children: ReactNode }) => {
             <Flex className={'layout'} justify={'space-between'} color={'white'} align={'center'}>
                 <div className={'logo'}>
                     <img src={logoImg} alt="logoImg"/>
+                    &nbsp;&nbsp;
                     <img src={logoText} alt="logoText"/>
                 </div>
                 <nav className={'nav'}>

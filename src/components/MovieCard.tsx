@@ -1,34 +1,32 @@
 import type {Movie} from "../features/movies/moviesSlice.ts";
 import {useNavigate} from "react-router-dom";
 import {StorageService} from "../services/apiService.ts";
-import {Button} from "antd";
-import {useState} from "react";
-import {message} from "antd";
-
-export const isAvailable = (id: number) => {
-    const isAvailableValue = StorageService.getItem('favorites')?.find((el: Movie) => el.id === id);
-    console.log(!!isAvailableValue);
-    return !!isAvailableValue;
-}
+import {Button, message} from "antd";
+import {useIsFavorite} from "../hooks/useIsFavorite.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {addFavoriteMovie, getUsername, removeFavoriteMovie,} from "../features/login/loginSlice.ts";
+import {useEffect} from "react";
+import type {RootState} from "../app/store.ts";
 
 const MovieCard = ({movie}: { movie: Movie }) => {
-    const [messageApi, contextHolder] = message.useMessage();
-
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [messageApi, contextHolder] = message.useMessage();
+    const favorites = useSelector((state: RootState) => state.login.favoriteMoviesList);
+    const username = useSelector(getUsername);
+    const isFavorite = useIsFavorite(movie.id);
 
-    const initialFavoriteValue = isAvailable(movie.id);
-    const [isFavorite, setFavorite] = useState(initialFavoriteValue);
+    useEffect(() => {
+        StorageService.setItem("favorites", favorites);
+    }, [favorites]);
 
-    const handleClick = () => {
+    const handleMovieCardClick = () => {
         navigate('/movies/' + movie.id);
     }
 
     const setToFavorites = () => {
-        if (!isAvailable(movie.id)) {
-            let favorites: Movie[] = StorageService.getItem('favorites') ?? [];
-            favorites = [...favorites, movie];
-            StorageService.setItem("favorites", favorites);
-            setFavorite(true);
+        if (!isFavorite) {
+            dispatch(addFavoriteMovie(movie));
             messageApi.open({
                 type: 'info',
                 content: 'Movie Added to Favorites',
@@ -37,10 +35,7 @@ const MovieCard = ({movie}: { movie: Movie }) => {
     }
 
     const deleteFromFavorites = () => {
-        let favorites: Movie[] = StorageService.getItem('favorites') ?? [];
-        favorites = favorites?.filter((el: Movie) => el.id !== movie.id);
-        StorageService.setItem("favorites", favorites);
-        setFavorite(false);
+        dispatch(removeFavoriteMovie(movie.id));
         messageApi.open({
             type: 'info',
             content: 'Movie Deleted from Favorites',
@@ -50,7 +45,7 @@ const MovieCard = ({movie}: { movie: Movie }) => {
     return (
         <>
             {contextHolder}
-            <div key={movie.id} className="movie-card" onClick={handleClick}>
+            <div className="movie-card" onClick={handleMovieCardClick}>
                 {!!movie.poster_path && <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt={movie.title}
@@ -62,12 +57,12 @@ const MovieCard = ({movie}: { movie: Movie }) => {
                     <span className="dot">•</span>
                     <span>{Math.round(movie.vote_average * 10)}%</span>
                 </div>
-                {!isFavorite && <Button onClick={(e) => {
+                {(!isFavorite && username) && <Button onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     setToFavorites();
                 }}>Favorite</Button>}
-                {isFavorite && <Button onClick={(e) => {
+                {(isFavorite && username) && <Button onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     deleteFromFavorites();
