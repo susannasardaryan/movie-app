@@ -6,13 +6,17 @@ import {useNavigate} from "react-router-dom";
 import logoImg from "../assets/Mask group.png";
 import logoText from "../assets/Movies.png";
 import {StorageService} from "../services/apiService.ts";
+import {setInfo} from "../features/login/loginSlice.ts";
+import {useDispatch} from "react-redux";
 
 const Layout = ({children}: { children: ReactNode }) => {
     const navigate = useNavigate();
-    const isLoggedIn = StorageService.getItem('isLoggedIn');
+    const isLoggedIn = StorageService.getItem('userInfo');
+    const dispatch = useDispatch();
 
     const handleLogOut = () => {
-        localStorage.setItem("isLoggedIn", JSON.stringify(false));
+        localStorage.setItem("userInfo", 'null');
+        dispatch(setInfo({username: '', password: ''}));
         navigate('/');
     }
 

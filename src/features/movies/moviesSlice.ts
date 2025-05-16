@@ -18,14 +18,14 @@ export type Movie = {
 
 const moviesSlice = createSlice({
     name: "movies",
-    initialState: [],
+    initialState: [] as MoviesState,
     reducers: {
-        setMovies: (_state: MoviesState, action: PayloadAction<Movie[]>) => action.payload,
+        setMovies: (_state, action: PayloadAction<Movie[]>) => action.payload,
     },
     selectors: {
         selectMovies: (state: MoviesState) => state,
     }
-})
+});
 
 export const {setMovies} = moviesSlice.actions;
 export const {selectMovies} = moviesSlice.selectors;

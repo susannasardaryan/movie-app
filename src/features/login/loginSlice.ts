@@ -5,13 +5,13 @@ interface LoginState{
    userInfo: UserInfo,
 }
 
-type UserInfo = {
+export type UserInfo = {
     username: string,
     password: string,
 }
 
 const loginSlice = createSlice({
-    name: "loginSlice",
+    name: "user",
     initialState: {
         userInfo: {
             username: "",
@@ -20,8 +20,8 @@ const loginSlice = createSlice({
     },
     reducers: {
         setInfo: (state:LoginState,action: PayloadAction<UserInfo>)=> {
-            state.userInfo.username = action.payload.username;
-            state.userInfo.password = action.payload.password;
+            state.userInfo.username = action.payload?.username;
+            state.userInfo.password = action.payload?.password;
         }
     }
 })

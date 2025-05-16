@@ -8,7 +8,7 @@ const MoviePage = () => {
     const movieId = location.pathname.split("/")[2];
     const movies = useSelector((state:RootState) => state.movies);
 
-    const movie:Movie = movies.find((movie:Movie) => movie.id === +movieId);
+    const movie:Movie|undefined = movies.find((movie:Movie) => movie.id === +movieId);
 
     return (
         <div  style={{ width: "50%" }}>

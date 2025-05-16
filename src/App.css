@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 body {
     background-color: #030303;
     padding: 1rem;
     transition: all 1s linear;
     color: white;
+    height: 100%;
 }
 
 .header {
@@ -37,8 +43,8 @@ body {
     color: #556eec;
 }
 
-.movies{
-    padding: 0.1rem 0.3rem ;
+.movies {
+    padding: 0.1rem 0.3rem;
 }
 
 
@@ -121,6 +127,7 @@ body {
     background: linear-gradient(to right, #9095b5, #9e4a6d);
     -webkit-background-clip: text;
 }
+
 .hero-right {
     flex: 1;
     display: flex;
@@ -154,4 +161,16 @@ body {
     margin-bottom: 3rem;
     border-radius: 10px;
     transform: translate(-50px);
+}
+
+.login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-30%, -50%);
+}
+
+
+.white-form .ant-checkbox-wrapper {
+    color: white;
 }

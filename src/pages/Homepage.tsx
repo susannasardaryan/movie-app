@@ -6,9 +6,13 @@ import {StorageService} from "../services/apiService.ts";
 import MovieCard from "../components/MovieCard.tsx";
 import {PlayCircleFilled} from "@ant-design/icons";
 import {Flex} from "antd";
+import {useSelector} from "react-redux";
+import type {RootState} from "../app/store.ts";
+import type {UserInfo} from "../features/login/loginSlice.ts";
 
 const Homepage = () => {
-    const initialFavorites:Movie[] = StorageService.getItem('favorites') ?? [];
+    const initialFavorites: Movie[] = StorageService.getItem('favorites') ?? [];
+    const user: UserInfo = useSelector((state: RootState) => state.user.userInfo);
 
     return (
         <>
@@ -28,14 +32,17 @@ const Homepage = () => {
                     <img src={homepage2} alt="Guardians" className="side-img"/>
                 </div>
             </div>
-
-            <h3>My favorites</h3>
-            <Flex gap={'small'}>
-                {initialFavorites?.map((favorite: Movie) => (
-                    <MovieCard movie={favorite}/>
-                ))}
-            </Flex>
-
+            {
+                (initialFavorites.length > 0 && !!user.username) && (
+                    <>
+                        <h3>My favorites</h3>
+                        <Flex gap={'small'}>
+                            {initialFavorites?.map((favorite: Movie) => (
+                                <MovieCard movie={favorite} key={favorite.id}/>
+                            ))}
+                        </Flex>
+                    </>)
+            }
         </>
     )
 }

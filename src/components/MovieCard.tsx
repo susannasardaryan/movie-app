@@ -41,6 +41,10 @@ const MovieCard = ({movie}: { movie: Movie }) => {
         favorites = favorites?.filter((el: Movie) => el.id !== movie.id);
         StorageService.setItem("favorites", favorites);
         setFavorite(false);
+        messageApi.open({
+            type: 'info',
+            content: 'Movie Deleted from Favorites',
+        });
     }
 
     return (
@@ -60,14 +64,14 @@ const MovieCard = ({movie}: { movie: Movie }) => {
                 </div>
                 {!isFavorite && <Button onClick={(e) => {
                     e.preventDefault();
-                    e.stopPropagation(); // 🔒 Prevent navigating
-                    setToFavorites(); // Your logic
+                    e.stopPropagation();
+                    setToFavorites();
                 }}>Favorite</Button>}
                 {isFavorite && <Button onClick={(e) => {
                     e.preventDefault();
-                    e.stopPropagation(); // 🔒 Prevent navigating
-                    deleteFromFavorites(); // Your logic
-                }} color="danger" variant="outlined">Delete</Button>}
+                    e.stopPropagation();
+                    deleteFromFavorites();
+                }} color="danger" variant="outlined">Delete From Favorites</Button>}
             </div>
         </>
 
