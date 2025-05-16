@@ -1,6 +1,3 @@
-import homepage1 from '../assets/homepage1.jpg'
-import homepage2 from '../assets/homepage2.jpg'
-
 import type {Movie} from "../features/movies/moviesSlice.ts";
 import MovieCard from "../components/MovieCard.tsx";
 import {PlayCircleFilled} from "@ant-design/icons";
@@ -34,10 +31,10 @@ const Homepage = () => {
 
                 <div className="hero-right">
                     <div className="main-image-container">
-                        <img src={homepage1} alt="Spiderverse" className="main-img"/>
+                        <img src={'./homepage1.png'} alt="Spiderverse" className="main-img"/>
                         <PlayCircleFilled className="center-play-icon"/>
                     </div>
-                    <img src={homepage2} alt="Guardians" className="side-img"/>
+                    <img src={'./homepage2.png'} alt="Guardians" className="side-img"/>
                 </div>
             </div>
             {

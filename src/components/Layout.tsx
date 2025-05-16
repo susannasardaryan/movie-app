@@ -3,8 +3,6 @@ import {HOME_PATH, MOVIES_HOME_PATH} from "../routes/paths.ts";
 import type {ReactNode} from "react";
 import {Button, Flex} from "antd";
 import {useNavigate} from "react-router-dom";
-import logoImg from "../assets/Mask group.png";
-import logoText from "../assets/Movies.png";
 import {StorageService} from "../services/apiService.ts";
 import {setInfo} from "../features/login/loginSlice.ts";
 import {useDispatch} from "react-redux";
@@ -28,9 +26,9 @@ const Layout = ({children}: { children: ReactNode }) => {
         <>
             <Flex className={'layout'} justify={'space-between'} color={'white'} align={'center'}>
                 <div className={'logo'}>
-                    <img src={logoImg} alt="logoImg"/>
+                    <img src='/Mask%20group.png' alt="logoImg"/>
                     &nbsp;&nbsp;
-                    <img src={logoText} alt="logoText"/>
+                    <img src={'/Movies.png'} alt="logoText"/>
                 </div>
                 <nav className={'nav'}>
                     <NavLink to={HOME_PATH} end>
