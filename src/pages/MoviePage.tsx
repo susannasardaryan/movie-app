@@ -1,15 +1,14 @@
 import {Navigate, useLocation, useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
-import type {RootState} from "../app/store.ts";
 import type {Movie} from "../features/movies/moviesSlice.ts";
 import {RollbackOutlined} from "@ant-design/icons";
+import { useAppSelector } from "../app/hooks.ts";
 
 const MoviePage = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
     const movieId = location.pathname.split("/")[2];
-    const movies = useSelector((state: RootState) => state.movies);
+    const movies = useAppSelector(state => state.movies);
 
     const movie: Movie | undefined = movies.find((movie: Movie) => movie.id === +movieId);
     if (!movie) {

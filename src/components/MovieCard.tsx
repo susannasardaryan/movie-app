@@ -3,17 +3,17 @@ import {useNavigate} from "react-router-dom";
 import {StorageService} from "../services/apiService.ts";
 import {Button, message} from "antd";
 import {useIsFavorite} from "../hooks/useIsFavorite.ts";
-import {useDispatch, useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../app/hooks.ts";
 import {addFavoriteMovie, getUsername, removeFavoriteMovie,} from "../features/login/loginSlice.ts";
 import {useEffect} from "react";
 import type {RootState} from "../app/store.ts";
 
 const MovieCard = ({movie}: { movie: Movie }) => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [messageApi, contextHolder] = message.useMessage();
-    const favorites = useSelector((state: RootState) => state.login.favoriteMoviesList);
-    const username = useSelector(getUsername);
+    const favorites = useAppSelector((state: RootState) => state.login.favoriteMoviesList);
+    const username = useAppSelector(getUsername);
     const isFavorite = useIsFavorite(movie.id);
 
     useEffect(() => {

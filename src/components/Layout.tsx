@@ -5,12 +5,12 @@ import {Button, Flex} from "antd";
 import {useNavigate} from "react-router-dom";
 import {StorageService} from "../services/apiService.ts";
 import {setInfo} from "../features/login/loginSlice.ts";
-import {useDispatch} from "react-redux";
+import { useAppDispatch } from "../app/hooks.ts";
 
 const Layout = ({children}: { children: ReactNode }) => {
     const navigate = useNavigate();
     const isLoggedIn = StorageService.getItem('userInfo');
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleLogOut = () => {
         localStorage.setItem("userInfo", 'null');

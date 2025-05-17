@@ -2,16 +2,15 @@ import type {Movie} from "../features/movies/moviesSlice.ts";
 import MovieCard from "../components/MovieCard.tsx";
 import {PlayCircleFilled} from "@ant-design/icons";
 import {Flex} from "antd";
-import {useSelector} from "react-redux";
-import type {RootState} from "../app/store.ts";
+import { useAppSelector } from "../app/hooks.ts";
 import {type UserInfo} from "../features/login/loginSlice.ts";
 import {fetchPopularMovies} from "../api/fetchData.ts";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 const Homepage = () => {
-    const favoriteMovies: Movie[] = useSelector((state: RootState) => state.login.favoriteMoviesList);
-    const user: UserInfo = useSelector((state: RootState) => state.login.userInfo);
+    const favoriteMovies: Movie[] = useAppSelector(state => state.login.favoriteMoviesList);
+    const user: UserInfo = useAppSelector(state => state.login.userInfo);
     let [trendingMovies, setRendingMovies] = useState<Movie[]>([]);
     const navigate = useNavigate();
 
